@@ -1,3 +1,4 @@
+import PyQt6
 import PyQt6.QtWidgets as qtw
 import PyQt6.QtCore as qtc
 import PyQt6.QtGui as qtg
@@ -9,7 +10,7 @@ class MainWindow(qtw.QMainWindow):
         self.setWindowFlags(self.windowFlags() & ~qtc.Qt.WindowType.WindowMaximizeButtonHint)
         self.setFixedWidth(290)
         self.setFixedHeight(370)
-
+        self.setWindowIcon(PyQt6.QtGui.QIcon('flask.ico'))
         self.setWindowTitle("Dilution Calculator")
 
         layout = qtw.QFormLayout()
@@ -72,7 +73,7 @@ class MainWindow(qtw.QMainWindow):
 
         widget = qtw.QWidget()
         widget.setLayout(layout)
-        
+
         self.setCentralWidget(widget)
 
     def calculate(self):
@@ -109,8 +110,8 @@ class MainWindow(qtw.QMainWindow):
             if water_vol < 0:
                 self.steps.setText("Error: Not enough room for desired concentration. Adjust final volume or concentration.")
             else:
-                self.steps.setText(f"Steps:\n1) Combine {vol_from_stock_A:.2f} mL of solution A and {vol_from_stock_B:.2f} mL of solution B.\n"
-                                   f"2) To reach a final volume of {final_volume_mL:.1f} mL, add {water_vol:.2f} mL of deionized water.")
+                self.steps.setText(f"Steps:\n1) Combine {vol_from_stock_A:.3f} mL of solution A and {vol_from_stock_B:.3f} mL of solution B.\n"
+                                   f"2) To reach a final volume of {final_volume_mL:.2f} mL, add {water_vol:.3f} mL of deionized water.")
         except ValueError:
             self.steps.setText("Please fill in all fields with valid numbers.")
 
