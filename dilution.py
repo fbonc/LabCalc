@@ -1,11 +1,14 @@
 import PyQt6.QtWidgets as qtw
-#import PyQt6.QtCore as qtc
+import PyQt6.QtCore as qtc
 import PyQt6.QtGui as qtg
 
 class MainWindow(qtw.QMainWindow):
 
     def __init__(self):
         super().__init__()
+        self.setWindowFlags(self.windowFlags() & ~qtc.Qt.WindowType.WindowMaximizeButtonHint)
+        self.setFixedWidth(290)
+        self.setFixedHeight(370)
 
         self.setWindowTitle("Dilution Calculator")
 
@@ -47,6 +50,7 @@ class MainWindow(qtw.QMainWindow):
         self.button1.clicked.connect(self.calculate)
 
         self.steps = qtw.QLabel("Fill in all boxes and press go to get instructions")
+        self.steps.setWordWrap(True)
 
         layout.addRow(self.solutionA)
         layout.addRow(self.initial_A_conc, self.initial_A_vol)
@@ -106,7 +110,7 @@ class MainWindow(qtw.QMainWindow):
                 self.steps.setText("Error: Not enough room for desired concentration. Adjust final volume or concentration.")
             else:
                 self.steps.setText(f"Steps:\n1) Combine {vol_from_stock_A:.2f} mL of solution A and {vol_from_stock_B:.2f} mL of solution B.\n"
-                                   f"2) To reach a final volume of {final_volume_mL} mL, add {water_vol:.2f} mL of deionized water.")
+                                   f"2) To reach a final volume of {final_volume_mL:.1f} mL, add {water_vol:.2f} mL of deionized water.")
         except ValueError:
             self.steps.setText("Please fill in all fields with valid numbers.")
 
@@ -119,4 +123,3 @@ app.exec()
 
 
 
-        
